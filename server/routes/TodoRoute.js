@@ -1,5 +1,5 @@
 const express=require("express")
-const TodoController=require("../Controllers/TodoControllers")
+const TodoController=require("../Controllers/TodoController")
 const router=express.Router()
 
 router.get("/",TodoController.getAllTodoes)

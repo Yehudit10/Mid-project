@@ -1,46 +1,44 @@
 import * as React from 'react';
-import { Drawer, List, ListItem, ListItemText, ListItemIcon, Divider, Box, IconButton, Typography, CssBaseline, ListItemButton } from '@mui/material';
-import { Outlet, Link } from 'react-router-dom';
-import { Home, } from '@mui/icons-material'
-import { Suspense } from 'react';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import ArticleIcon from '@mui/icons-material/Article';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'; 
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'; 
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+import { Drawer, List, ListItemText, ListItemIcon, Box, IconButton, Typography, CssBaseline, ListItemButton } from '@mui/material';
+import { Home } from '@mui/icons-material';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { TaskAlt as TaskAltIcon, Article as ArticleIcon, AccountCircle as AccountCircleIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, PhotoLibrary as PhotoLibraryIcon } from '@mui/icons-material';
+
+
 const SideNav = () => {
   const NAVIGATION = [
     {
-      segment: '/',
+      path: '/home',
       title: 'Home',
       icon: <Home />,
     },
     {
       title: 'Users',
       icon: <AccountCircleIcon />,
-      segment: '/users',
+      path: '/users',
     },
     {
       title: 'Posts',
       icon: <ArticleIcon />,
-      segment: '/posts',
+      path: '/posts',
     },
     {
       title: 'Todos',
       icon: <TaskAltIcon />,
-      segment: '/todos',
+      path: '/todos',
     },
     {
       title: 'Photos',
       icon: <PhotoLibraryIcon />,
-      segment: '/photos',
+      path: '/photos',
     }
   ];
+  const location=useLocation()
   const [minimized, setMinimized] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
   return (
+    <>
     <Box sx={{ display: 'flex' }}>
+      
       <CssBaseline />
       <Drawer
         variant="permanent"
@@ -72,9 +70,8 @@ const SideNav = () => {
         {NAVIGATION.map((item, index) => (
           <ListItemButton
             component={Link}
-            to={item.segment}
-            selected={selectedIndex === index}
-            onClick={() => { setSelectedIndex(index) }}
+            to={item.path}
+            selected={location.pathname===item.path}
           >
             <ListItemIcon>
               {item.icon}
@@ -89,7 +86,7 @@ const SideNav = () => {
           <Outlet />
         </Box>
       </Box>
-    </Box>
+    </Box></>
   );
 };
 

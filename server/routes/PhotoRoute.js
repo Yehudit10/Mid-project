@@ -1,5 +1,5 @@
 const express=require("express")
-const PhotoController=require("../Controllers/PhotoControllers")
+const PhotoController=require("../Controllers/PhotoController")
 const router=express.Router()
 router.use(express.static("public"))
 router.get("/",PhotoController.getAllPhotos)

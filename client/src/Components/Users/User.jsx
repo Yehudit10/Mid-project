@@ -1,24 +1,14 @@
 
-import * as React from 'react';
-import axios from 'axios'
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { blue, green,red } from '@mui/material/colors';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import{useState} from 'react'
+import axios from 'axios';
+import { Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography } from '@mui/material';
+import { blue, green, red } from '@mui/material/colors';
+import { Delete as DeleteIcon, Edit as EditIcon, AccountBalance as AccountBalanceIcon, MailOutline as MailOutlineIcon, LocalPhone as LocalPhoneIcon } from '@mui/icons-material';
+import { useState, useCallback } from 'react';
 import DeleteDialog from '../DeleteDialog';
 import UserWindow from './UserWindow';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+
 const User=(props) =>{
-  const UpdateUser=async(newUser)=>{
+  const UpdateUser=useCallback(async(newUser)=>{
         try{
     const res=await axios.put('http://localhost:1750/users',newUser)
     if(res.status===200)
@@ -28,9 +18,9 @@ const User=(props) =>{
         {
             console.error(err)
         }
-    }
+    },[])
    
-const DeleteUser=async()=>{
+const DeleteUser=useCallback(async()=>{
     try{
     
     const res=await axios.delete("http://localhost:1750/users",{data:{id:props.User._id}})
@@ -41,14 +31,13 @@ const DeleteUser=async()=>{
     {
         console.error(err)
     }
-}
+},[props.User._id])
 const [open,setOpen]=useState(false)
 const [openDelete,setOpenDelete]=useState(false)
 
   return (
     <>
   <DeleteDialog openDelete={openDelete} setOpenDelete={setOpenDelete} Delete={DeleteUser}/>
-  {/* <EditWindow2 open={open} setOpen={setOpen} newUser={newUser} setNewUser={setNewUser} setUsersList={props.setUsersList} action={UpdateUser}/> */}
   <UserWindow open={open} setOpen={setOpen}User={props.User} action={UpdateUser}/>
     <Card sx={{ width:0.48 ,margin:'1%',boxShadow:6,padding:'1%'}} >
       <CardHeader subheaderTypographyProps={{align:"left"} }

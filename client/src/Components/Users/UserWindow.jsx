@@ -1,29 +1,16 @@
-import { useEffect, useState } from "react"
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
-import PersonIcon from '@mui/icons-material/Person';
-import { Alert } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, AppBar, Toolbar, Container, TextField, Alert } from '@mui/material';
+import { AccountCircle, AccountBalance as AccountBalanceIcon, Email as EmailIcon, Phone as PhoneIcon, Person as PersonIcon } from '@mui/icons-material';
+
 
 
 const UserWindow=(props)=>{
-    const [isUserName,setIsUserName]=useState(true)
-    const[newUser,setNewUser]=useState({...props.User})
     useEffect(()=>{
-        console.log("useefect")
         setNewUser({...props.User})
       },[props.User])
+    const [isUserName,setIsUserName]=useState(true)
+    const[newUser,setNewUser]=useState({...props.User})
+    
     const save = async () => {
         if (!newUser.userName) {
             setIsUserName(false)

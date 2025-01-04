@@ -1,11 +1,15 @@
-import * as React from 'react';
-import { useState } from "react"
+
+import { useState,useCallback } from "react"
 import { IconButton } from '@mui/material';
 import axios from "axios";
 import PhotoWindow from './PhotoWindow';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+
+
+
+
 const AddPhoto = (props) => {
-  const CreatePhoto = async (newPhoto,setNewPhoto) => {
+  const CreatePhoto =useCallback(async (newPhoto,setNewPhoto) => {
     try {
       const res = await axios.post('http://localhost:1750/photos', newPhoto)
       if (res.status === 200)
@@ -17,12 +21,8 @@ const AddPhoto = (props) => {
     catch (err) {
       console.error(err)
     }
-  }
-  const handleClose = () => {
-    setOpen(false);
-  }
+  },[])
   const [open, setOpen] = useState(false)
-  
   return (
     <>
     <PhotoWindow open={open} setOpen={setOpen} Photo={{}} action={CreatePhoto}/>
@@ -42,7 +42,6 @@ const AddPhoto = (props) => {
           },
         }}
         onClick={() => {
-          //setNewPhoto({})
           setOpen(true)
         }}
       >

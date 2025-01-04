@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import AddTodo from './AddTodo'
 import Todo from './Todo'
 import { Typography } from '@mui/material'
-import * as React from 'react';
 import Search from '../Search'
 
 

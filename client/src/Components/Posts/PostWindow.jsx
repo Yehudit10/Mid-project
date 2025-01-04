@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react"
-import { Alert, Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Alert, Container, AppBar, Toolbar, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Box } from "@mui/joy";
 import Textarea from '@mui/joy/Textarea';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/joy/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+
 
 const PostWindow=(props)=>{
+  useEffect(()=>{
+    setNewPost(props.Post)
+  },[props.Post])
+  
     const [isTitle,setIsTitle]=useState(true)
     const[newPost,setNewPost]=useState({...props.Post})
-    useEffect(()=>{
-      setNewPost(props.Post)
-    },[props.Post])
+   
     const save=()=>{
         if(!newPost.title)
         {setIsTitle(false)
@@ -29,6 +24,8 @@ const PostWindow=(props)=>{
         setIsTitle(true)
        
     }
+  useEffect(()=>{console.log("createpost")},[props.action])
+
     return(
   <Dialog open={props.open} >
         <DialogTitle id="alert-dialog-title">

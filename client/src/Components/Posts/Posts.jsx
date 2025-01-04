@@ -1,10 +1,10 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import Post from './Post'
-import AddPost from './AddPost'
-import { Box,Typography } from '@mui/material'
-import * as React from 'react';
-import Search from '../Search'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import Post from './Post';
+import AddPost from './AddPost';
+import Search from '../Search';
+
 const Posts=()=>{
     const getAllPosts=async()=>{
         try{

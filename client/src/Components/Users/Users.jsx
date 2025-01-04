@@ -4,6 +4,7 @@ import User from './User'
 import AddUser from './AddUser'
 import { Box, Typography } from '@mui/material'
 import Search from '../Search'
+
 const Users=()=>{
     const[UsersList,setUsersList]=useState([])
     useEffect(()=>{getAllUsers()},[])

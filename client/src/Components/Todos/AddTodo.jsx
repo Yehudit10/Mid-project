@@ -1,12 +1,12 @@
 import { IconButton } from "@mui/material"
 import TodoWindow from "./TodoWindow"
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import axios from "axios";
 
 const AddTodo=(props)=>{
 const [open,setOpen]=useState(false)
-const CreateTodo=async(newToDo,setNewTodo)=>{
+const CreateTodo=useCallback(async(newToDo,setNewTodo)=>{
   try{
      const res=await axios.post('http://localhost:1750/todos',newToDo)
      if(res.status===200)
@@ -17,7 +17,7 @@ const CreateTodo=async(newToDo,setNewTodo)=>{
   {
       console.error(err)
   }
-}
+},[])
     return(<>
     <TodoWindow  open={open} setOpen={setOpen} action={CreateTodo}/>
     <IconButton 

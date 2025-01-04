@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { useState } from "react"
+
+import { useState,useCallback } from "react"
 import { IconButton } from '@mui/material';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import axios from "axios";
 import PostWindow from './PostWindow';
 
 const AddPost = (props) => {
-  const CreatePost = async (newPost,setNewPost) => {
+  const CreatePost = useCallback(async (newPost,setNewPost) => {
     try {
       const res = await axios.post('http://localhost:1750/posts', newPost)
       if (res.status === 200)
@@ -18,12 +18,8 @@ const AddPost = (props) => {
     catch (err) {
       console.error(err)
     }
-  }
-  const handleClose = () => {
-    setOpen(false);
-  }
+  },[])
   const [open, setOpen] = useState(false)
-  
   return (
     <>
     <PostWindow open={open} setOpen={setOpen} Post={{}} action={CreatePost}/>
@@ -43,7 +39,6 @@ const AddPost = (props) => {
           },
         }}
         onClick={() => {
-          //setNewPost({})
           setOpen(true)
         }}
       >

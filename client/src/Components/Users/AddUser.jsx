@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useState,useCallback } from "react"
 import { IconButton } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import axios from "axios";
 import UserWindow from "./UserWindow";
 
 const AddUser=(props)=>{
-    const CreateUser=async(newUser,setNewUser)=>{
+    const CreateUser=useCallback( async(newUser,setNewUser)=>{
     try{
        const res=await axios.post('http://localhost:1750/users',newUser)
        if(res.status===200)
@@ -16,13 +16,12 @@ const AddUser=(props)=>{
     {
         console.error(err)
     }
-}
+},[])
    
     const [open,setOpen]=useState(false)
     
     return (
         <>
-  {/* <EditWindow2 open={open} setOpen={setOpen} newUser={newUser} setNewUser={setNewUser}  action={CreateUser}/> */}
 <UserWindow open={open} setOpen={setOpen} action={CreateUser}/>
     <IconButton 
     sx={{

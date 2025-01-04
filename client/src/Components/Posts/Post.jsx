@@ -1,24 +1,17 @@
-import * as React from 'react';
-import axios from 'axios'
-//import { useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import React, { useState, useCallback } from 'react';
+import axios from 'axios';
+import { Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography } from '@mui/material';
 import { blue, grey, red } from '@mui/material/colors';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import{useState} from 'react'
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import DeleteDialog from '../DeleteDialog';
 import PostWindow from './PostWindow';
 
 
+
+
 const Post=(props)=>{
-    const UpdatePost=async(newPost)=>{
+  
+      const UpdatePost=useCallback(async(newPost)=>{
         
         try{
     const res=await axios.put('http://localhost:1750/posts',newPost)
@@ -29,9 +22,8 @@ const Post=(props)=>{
         {
             console.error(err)
         }
-    }
-  
-    const DeletePost=async()=>{
+    },[])
+    const DeletePost=useCallback(async()=>{
         try{
         const res=await axios.delete(`http://localhost:1750/posts`,{data:{id:props.Post._id}})
         if(res.status===200)
@@ -42,7 +34,7 @@ const Post=(props)=>{
         {
             console.error(err)
         }
-    }
+    },[props.Post._id])
 const [open,setOpen]=useState(false)
 const [openDelete,setOpenDelete]=useState(false)
     return (<>

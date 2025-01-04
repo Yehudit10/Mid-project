@@ -1,20 +1,19 @@
-import { Box, ImageListItem, ImageListItemBar } from "@mui/material";
-import { IconButton, Typography } from "@mui/material"
-import { useState } from "react"
+import { Box, ImageListItem, ImageListItemBar, IconButton, Typography } from "@mui/material";
+import { useState, useCallback } from "react";
+import { Delete as DeleteIcon, ZoomIn as ZoomInIcon, Edit as EditIcon } from '@mui/icons-material';
+import axios from "axios";
 import DeleteDialog from '../DeleteDialog';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import EditIcon from '@mui/icons-material/Edit';
-import axios from "axios"
 import PhotoWindow from "./PhotoWindow";
 import ShowPhoto from "./ShowPhoto";
+
+
 
 const Photo=(props)=>{
   const [open,setOpen]=useState(false)
     const [openDelete,setOpenDelete]=useState(false)
     const [openPhoto,setOpenPhoto]=useState(false)
 
-    const DeletePhoto=async()=>{
+    const DeletePhoto=useCallback(async()=>{
       try{
       const res=await axios.delete(`http://localhost:1750/photos`,{data:{id:props.Photo._id}})
 
@@ -25,10 +24,10 @@ const Photo=(props)=>{
       {
           console.error(err)
       }
-  }
+  },[props.Photo._id]) 
 
 
-  const UpdatePhoto=async(newPhoto)=>{
+  const UpdatePhoto=useCallback(async(newPhoto)=>{
       try{
   const res=await axios.put('http://localhost:1750/photos',newPhoto)
   if(res.status===200)
@@ -38,7 +37,7 @@ const Photo=(props)=>{
       {
           console.error(err)
       }
-  }
+  },[])
     return(<>
     
     <ShowPhoto openPhoto={openPhoto} setOpenPhoto={setOpenPhoto} Photo={props.Photo}/>

@@ -1,13 +1,11 @@
-import { AppBar, Toolbar, Typography } from '@mui/material'
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
+import { AppBar, Toolbar, Typography,Paper ,InputBase,} from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 
 
 const Search=(props)=>{
 return(
     <Typography>
+       
     <AppBar position="fixed" component="nav">
         <Toolbar>
             <Paper

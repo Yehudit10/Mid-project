@@ -39,10 +39,10 @@ const createPhoto=async(req,res)=>{
 const deletePhoto=async(req,res)=>{
     const {id}=req.body
     if(!id)
-    res.status(400).send("no id")
+    return res.status(400).send("no id")
     const photo=await Photo.findById(id).exec()
     if(!photo)
-    res.status(400).send("photo not found")
+    return res.status(400).send("photo not found")
     await photo.deleteOne()
     const photos=await Photo.find().sort({_id:1}).lean()
     if(!photos)

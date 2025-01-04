@@ -15,9 +15,9 @@ const ShowPhoto=(props)=>{
       </IconButton>
     <img
 style={{
-  maxWidth: '100%', // Makes sure the image does not overflow the dialog
-  maxHeight: '100%', // Ensures the image fits within the dialog size
-  objectFit: 'contain', // Ensures the image aspect ratio is preserved
+  maxWidth: '100%', 
+  maxHeight: '100%', 
+  objectFit: 'contain',
 }}
             src={props.Photo.imgUrl}
             alt={props.Photo.title}
