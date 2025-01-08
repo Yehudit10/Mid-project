@@ -9,9 +9,10 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 
 const AddPhoto = (props) => {
-  const CreatePhoto =useCallback(async (newPhoto,setNewPhoto) => {
+
+  const CreatePhoto =useCallback(async function Create_Photo(newPhoto,setNewPhoto){
     try {
-      const res = await axios.post('http://localhost:1750/photos', newPhoto)
+      const res = await axios.post(props.url, newPhoto)
       if (res.status === 200)
           {
             props.setPhotosList(res.data)

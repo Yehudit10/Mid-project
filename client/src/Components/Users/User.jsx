@@ -8,9 +8,9 @@ import DeleteDialog from '../DeleteDialog';
 import UserWindow from './UserWindow';
 
 const User=(props) =>{
-  const UpdateUser=useCallback(async(newUser)=>{
+  const UpdateUser=useCallback(async function Update_User(newUser){
         try{
-    const res=await axios.put('http://localhost:1750/users',newUser)
+    const res=await axios.put(props.url,newUser)
     if(res.status===200)
         props.setUsersList(res.data)
         }
@@ -18,12 +18,12 @@ const User=(props) =>{
         {
             console.error(err)
         }
-    },[])
+    },[props.url])
    
 const DeleteUser=useCallback(async()=>{
     try{
     
-    const res=await axios.delete("http://localhost:1750/users",{data:{id:props.User._id}})
+    const res=await axios.delete(props.url,{data:{id:props.User._id}})
     if(res.status===200)
         props.setUsersList(res.data)
 }
@@ -31,7 +31,7 @@ const DeleteUser=useCallback(async()=>{
     {
         console.error(err)
     }
-},[props.User._id])
+},[props.User._id,props.url])
 const [open,setOpen]=useState(false)
 const [openDelete,setOpenDelete]=useState(false)
 

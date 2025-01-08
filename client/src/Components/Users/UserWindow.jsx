@@ -39,9 +39,9 @@ const UserWindow=(props)=>{
                     <Toolbar>
                     </Toolbar>
                 </AppBar>
-                {!isUserName?<Alert variant="outlined"  severity="error">
+                {!isUserName&&<Alert variant="outlined"  severity="error">
             UserName is required!!
-        </Alert>:null}
+        </Alert>}
                 <Box sx={{ '& > :not(style)': { m: 1 } }}>
                     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />

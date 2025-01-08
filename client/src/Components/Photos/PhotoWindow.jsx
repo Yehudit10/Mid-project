@@ -33,9 +33,9 @@ useEffect(()=>{
               <Toolbar>
               </Toolbar>
             </AppBar>
-            {!isImgUrl?<Alert variant="outlined"  severity="error">
+            {!isImgUrl&&<Alert variant="outlined"  severity="error">
             ImgUrl is required!!
-            </Alert>:null}
+            </Alert>}
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <TextField sx={{width:"50vw"}} required id="input-imgUrl" label="image url" variant="standard" defaultValue={newPhoto.imgUrl} onChange={(e) => {setNewPhoto({ ...newPhoto, imgUrl: e.target.value })

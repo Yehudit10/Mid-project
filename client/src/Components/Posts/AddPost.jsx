@@ -6,9 +6,9 @@ import axios from "axios";
 import PostWindow from './PostWindow';
 
 const AddPost = (props) => {
-  const CreatePost = useCallback(async (newPost,setNewPost) => {
+  const CreatePost = useCallback(async function Create_Post (newPost,setNewPost){
     try {
-      const res = await axios.post('http://localhost:1750/posts', newPost)
+      const res = await axios.post(props.url, newPost)
       if (res.status === 200)
           {
             props.setPostsList(res.data)

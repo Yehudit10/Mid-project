@@ -6,9 +6,11 @@ import axios from "axios";
 
 const AddTodo=(props)=>{
 const [open,setOpen]=useState(false)
-const CreateTodo=useCallback(async(newToDo,setNewTodo)=>{
+const CreateTodo=useCallback(async function Create_Todo(newToDo,setNewTodo){
   try{
-     const res=await axios.post('http://localhost:1750/todos',newToDo)
+    
+     const res=await axios.post(props.url()
+     ,newToDo)
      if(res.status===200)
       props.setTodosList(res.data)
       setNewTodo({})
@@ -17,7 +19,7 @@ const CreateTodo=useCallback(async(newToDo,setNewTodo)=>{
   {
       console.error(err)
   }
-},[])
+},[props.url])
     return(<>
     <TodoWindow  open={open} setOpen={setOpen} action={CreateTodo}/>
     <IconButton 

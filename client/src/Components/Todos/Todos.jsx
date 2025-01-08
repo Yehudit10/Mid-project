@@ -1,19 +1,32 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import AddTodo from './AddTodo'
 import Todo from './Todo'
-import { Typography } from '@mui/material'
+import { AppBar, Box, Toolbar, Typography } from '@mui/material'
 import Search from '../Search'
-
-
+import DateFilter from '../DateFilter'
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Radio from '@mui/joy/Radio';
+import RadioGroup from '@mui/joy/RadioGroup';
 
 const Todos = () => {
+    const [value, setValue] = useState();
+
+  const handleChange = (event) => {
+    console.log("ss")
+    //if (event.target.value===value)
+      setValue("kk")
+      //else
+    //setValue(event.target.value);
+  };
     const [todosList, setTodosList] = useState([])
-    useEffect(() => { getAllTodos() }, [])
+    const [updateDates,setUpdateDates]=useState([])
+    useEffect(() => { 
+        getAllTodos() }, [updateDates])
     const getAllTodos = async () => {
         try {
-            console.log("useefect")
-            const res = await axios.get('http://localhost:1750/todos')
+            const res = await axios.get(url)
             if (res.status === 200)
                 setTodosList(res.data)
 
@@ -22,24 +35,43 @@ const Todos = () => {
             console.error(err)
         }
     }
-
-
+    
+    const[completeState,setCompleteState]=useState()
 
     const [search, setSearch] = useState("")
+    const url=useMemo(()=>`http://localhost:1750/todos?completeState=${completeState||""}&update_date_end=${updateDates[1]||""}&update_date_start=${updateDates[0]||""}`
+     ,[completeState,updateDates])
+
     return (
         <>
-            <Search setSearch={setSearch}/>
-            <br />
-            <br />
-            <br />
-            <Typography variant="h4" align="left" gutterBottom>
+    <Search setSearch={setSearch}/>
+    <br/>
+    <br/>
+    <br/>
+    <FormControl>
+      <FormLabel>Gender</FormLabel>
+      <RadioGroup
+       //defaultValue="female"
+        name="controlled-radio-buttons-group"
+        value={value}
+        onChange={handleChange}
+        sx={{ my: 1 }}
+      >
+        <Radio value="female" label="Female" />
+        <Radio value="male" label="Male" />
+        <Radio value="other" label="Other" />
+      </RadioGroup>
+    </FormControl>
+    <Box sx={{display:'flex'}}>
+            <Typography sx={{display:'flex',marginTop:3}} variant="h4" align="left" gutterBottom>
                 Todos
             </Typography>
-            <AddTodo setTodosList={setTodosList} />
-            {/* <Box  sx={{ display: "flex","flex-wrap":"wrap" }}> */}
-            {todosList.filter((todo) => { return todo.title?.includes(search) }).sort((t1,t2)=>(t1._id).localeCompare(t2._id)).map((todo) => { return <Todo Todo={todo} setTodosList={setTodosList} /> })}
-            {/* </Box> */}
-
+            <Typography sx={{display:'flex',marginLeft:70}} variant="h4" align="right" gutterBottom>
+                <DateFilter setDates={setUpdateDates}/>
+            </Typography>
+            </Box>
+            <AddTodo setTodosList={setTodosList}url={url}/>
+            {todosList.filter((todo) => todo.title?.includes(search)).map((todo) => { return <Todo Todo={todo} setTodosList={setTodosList} url={url}/> })}
         </>
     )
 }

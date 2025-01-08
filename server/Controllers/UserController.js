@@ -1,6 +1,8 @@
 const User=require("../modules/User")
 const getAllUsers=async(req,res)=>{
-const users=await User.find().sort({_id:1}).lean()
+    const {update_date_start,update_date_end}=req.query 
+    const query={updatedAt:{$lte:new Date(update_date_end||new Date()),$gte:new Date(update_date_start||0)}}     
+    const users=await User.find(query).sort({_id:1}).lean()
 if(!users)
     return res.status(400).send("no users")
 res.json(users)
@@ -15,14 +17,14 @@ const getUserByID=async(req,res)=>{
     const createUser=async(req,res)=>{
         
      const {name,userName,email,address,phone}=req.body
+     const existUser=await User.findOne({userName:userName})
+     if(existUser)
+       return res.status(400).send("user name already exists")
      const user=await User.create({name,userName,email,address,phone})
      if(!user)
         return res.status(400).send("create failed")
         
-        const users=await User.find().sort({_id:1}).lean()
-        if(!users)
-            return res.status(400).send("no users")
-        res.json(users)
+       getAllUsers(req,res)
     }
     const updateUser=async(req,res)=>{
         console.log(req.body)
@@ -41,10 +43,8 @@ const getUserByID=async(req,res)=>{
         const savedUser=await user.save()
         if(!savedUser)
             return res.status(400).send("update failed")
-            const users=await User.find().sort({_id:1}).lean()
-            if(!users)
-                return res.status(400).send("no users")
-            res.json(users)
+            getAllUsers(req,res)
+
        }
        const deleteUser=async(req,res)=>{
         const {id}=req.body
@@ -54,9 +54,7 @@ const getUserByID=async(req,res)=>{
         if(!user)
            return res.status(400).send("no such user")
         await user.deleteOne()
-        const users=await User.find().sort({_id:1}).lean()
-        if(!users)
-            return res.status(400).send("no users")
-        res.json(users)
+        getAllUsers(req,res)
+
        }
 module.exports={getAllUsers,getUserByID,createUser,updateUser,deleteUser}

@@ -4,13 +4,15 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const Search=(props)=>{
 return(
+    <AppBar position="fixed" component="nav" >
+        <Toolbar >
+   
+      
+             
     <Typography>
-       
-    <AppBar position="fixed" component="nav">
-        <Toolbar>
             <Paper
                 component="form"
-                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, marginLeft: 80 }}
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 ,marginLeft:'35vw'}}
             >
                 <InputBase
                     sx={{ ml: 1, flex: 1, padding: '6px' }}
@@ -19,9 +21,10 @@ return(
                 />
                 <SearchIcon />
             </Paper>
-        </Toolbar>
-    </AppBar>
+            
 </Typography>
+</Toolbar>
+    </AppBar>
 )
 }
 export default Search

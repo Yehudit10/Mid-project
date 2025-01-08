@@ -14,20 +14,18 @@ const Todo = (props) => {
   const [completed, setCompleted] = useState(props.Todo.completed)
   const UpdateComplete = async (todo) => {
     try {
-      console.log(!todo.completed)
-      const res = await axios.put(`http://localhost:1750/todos`, { ...todo, completed: !todo.completed })
+      const res = await axios.put(props.url, { ...todo, completed: !todo.completed })
       if (res.status === 200)
         props.setTodosList(res.data)
     }
     catch (err) {
       console.error(err)
     }
-
   }
 
   const DeleteToDo = useCallback(async () => {
     try {
-      const res = await axios.delete(`http://localhost:1750/todos`, { data: { id: props.Todo._id } })
+      const res = await axios.delete(props.url, { data: { id: props.Todo._id } })
 
       if (res.status === 200)
         props.setTodosList(res.data)
@@ -35,19 +33,20 @@ const Todo = (props) => {
     catch (err) {
       console.error(err)
     }
-  }, [props.Todo._id])
+  }, [props.Todo._id],props.url)
 
 
-  const UpdateToDo = useCallback(async (newTodo) => {
+  const UpdateToDo = useCallback(async function  Update_ToDo(newTodo) {
     try {
-      const res = await axios.put('http://localhost:1750/todos', newTodo)
+      const res = await axios.put(props.url, newTodo)
+      console.log(res.data)
       if (res.status === 200)
         props.setTodosList(res.data)
     }
     catch (err) {
       console.error(err)
     }
-  }, [])
+  }, [props.url])
 
   return (
     <>

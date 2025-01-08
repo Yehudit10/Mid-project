@@ -1,6 +1,9 @@
 const Post=require("../modules/Post")
 const getAllPosts=async(req,res)=>{
-const posts=await Post.find().sort({_id:1}).lean()
+    const {update_date_start,update_date_end}=req.query 
+    const query={updatedAt:{$lte:new Date(update_date_end||new Date()),$gte:new Date(update_date_start||0)}}
+    console.log(query)     
+    const posts=await Post.find(query).sort({_id:1}).lean()
 if(!posts)
     return res.status(400).send("no posts")
 res.json(posts)
@@ -19,10 +22,8 @@ const getPostByID=async(req,res)=>{
      const post=await Post.create({title,body})
      if(!post)
         return res.status(400).send("create failed")
-        const posts=await Post.find().sort({_id:1}).lean()
-        if(!posts)
-            return res.status(400).send("no posts")
-        res.json(posts)
+        getAllPosts(req,res)
+
     }
     const updatePost=async(req,res)=>{
         const {_id,title,body}=req.body
@@ -36,10 +37,8 @@ const getPostByID=async(req,res)=>{
         const savedPost=await post.save()
         if(!savedPost)
             return res.status(400).send("update failed")
-            const posts=await Post.find().sort({_id:1}).lean()
-            if(!posts)
-                return res.status(400).send("no posts")
-            res.json(posts)
+            getAllPosts(req,res)
+
        }
        const deletePost=async(req,res)=>{
         const {id}=req.body
@@ -49,10 +48,9 @@ const getPostByID=async(req,res)=>{
         if(!post)
            return res.status(400).send("no post")
         await post.deleteOne()
-        const posts=await Post.find().sort({_id:1}).lean()
-        if(!posts)
-            return res.status(400).send("no posts")
-        res.json(posts)
+        getAllPosts(req,res)
+
+
        
        }
 module.exports={getAllPosts,getPostByID,createPost,updatePost,deletePost}

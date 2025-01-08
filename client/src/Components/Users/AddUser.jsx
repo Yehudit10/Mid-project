@@ -5,9 +5,9 @@ import axios from "axios";
 import UserWindow from "./UserWindow";
 
 const AddUser=(props)=>{
-    const CreateUser=useCallback( async(newUser,setNewUser)=>{
+    const CreateUser=useCallback( async function Create_User(newUser,setNewUser){
     try{
-       const res=await axios.post('http://localhost:1750/users',newUser)
+       const res=await axios.post(props.url,newUser)
        if(res.status===200)
         props.setUsersList(res.data)
     setNewUser({})
@@ -16,7 +16,7 @@ const AddUser=(props)=>{
     {
         console.error(err)
     }
-},[])
+},[props.url])
    
     const [open,setOpen]=useState(false)
     

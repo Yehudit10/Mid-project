@@ -7,7 +7,7 @@ import Textarea from '@mui/joy/Textarea';
 const PostWindow=(props)=>{
   useEffect(()=>{
     setNewPost(props.Post)
-  },[props.Post])
+  },[props.Post])// update
   
     const [isTitle,setIsTitle]=useState(true)
     const[newPost,setNewPost]=useState({...props.Post})
@@ -24,7 +24,6 @@ const PostWindow=(props)=>{
         setIsTitle(true)
        
     }
-  useEffect(()=>{console.log("createpost")},[props.action])
 
     return(
   <Dialog open={props.open} >
@@ -37,9 +36,9 @@ const PostWindow=(props)=>{
               <Toolbar>
               </Toolbar>
             </AppBar>
-            {!isTitle?<Alert variant="outlined"  severity="error">
+            {!isTitle&&<Alert variant="outlined"  severity="error">
                 Title is required!!
-            </Alert>:null}
+            </Alert>}
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
               <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <TextField required id="input-title" label="Title" variant="standard" defaultValue={newPost.title} onChange={(e) => {setNewPost({ ...newPost, title: e.target.value })

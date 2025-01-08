@@ -11,10 +11,9 @@ import PostWindow from './PostWindow';
 
 const Post=(props)=>{
   
-      const UpdatePost=useCallback(async(newPost)=>{
-        
+      const UpdatePost=useCallback(async function Update_Post(newPost){
         try{
-    const res=await axios.put('http://localhost:1750/posts',newPost)
+    const res=await axios.put(props.url,newPost)
     if(res.status===200)
         props.setPostsList(res.data)
         }
@@ -22,19 +21,18 @@ const Post=(props)=>{
         {
             console.error(err)
         }
-    },[])
+    },[props.url])
     const DeletePost=useCallback(async()=>{
         try{
-        const res=await axios.delete(`http://localhost:1750/posts`,{data:{id:props.Post._id}})
+        const res=await axios.delete(props.url,{data:{id:props.Post._id}})
         if(res.status===200)
            props.setPostsList(res.data)
-         
     }
         catch(err)
         {
             console.error(err)
         }
-    },[props.Post._id])
+    },[props.Post._id,props.url])
 const [open,setOpen]=useState(false)
 const [openDelete,setOpenDelete]=useState(false)
     return (<>
@@ -61,7 +59,7 @@ const [openDelete,setOpenDelete]=useState(false)
         }}aria-label="delete">
           <DeleteIcon/>
         </IconButton>
-        <IconButton size="medium" sx={{color:"white",bgcolor:blue[500],margin:1}} onClick={()=>{//setNewPost(props.Post)
+        <IconButton size="medium" sx={{color:"white",bgcolor:blue[500],margin:1}} onClick={()=>{
                                   setOpen(true)}}aria-label="edit">
           <EditIcon/>
         </IconButton>

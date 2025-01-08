@@ -23,6 +23,7 @@ const save = async () => {
         setNewTodo({...newTodo,tags:newTodo.tags.filter((tag) => tag != tagToDelete)});
       };
       const [isTitle,setIsTitle]=useState(true)
+    
     return (<>
 
         <Dialog open={props.open} > 
@@ -35,9 +36,9 @@ const save = async () => {
                         <Toolbar>
                         </Toolbar>
                     </AppBar>
-                    {!isTitle?<Alert variant="outlined"  severity="error">
+                    {!isTitle&&<Alert variant="outlined"  severity="error">
                 Title is required!!
-            </Alert>:null}
+            </Alert>}
                     <Box sx={{ '& > :not(style)': { m: 1 } }}>
                     {newTodo?.tags?.map((tag)=>{
                         return(
@@ -87,4 +88,4 @@ const save = async () => {
     </>
     )
 }
-export default TodoWindow
+export default TodoWindow;
