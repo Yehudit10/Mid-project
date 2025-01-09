@@ -17,7 +17,7 @@ const getUserByID=async(req,res)=>{
     const createUser=async(req,res)=>{
         
      const {name,userName,email,address,phone}=req.body
-     const existingUser=await User.findOne({userName:userName})
+     const existingUser=await User.findOne({userName:userName}).lean()
      if(existingUser)
        return res.status(400).send("user name already exists")
      const user=await User.create({name,userName,email,address,phone})

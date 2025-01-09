@@ -1,8 +1,7 @@
 const Post=require("../modules/Post")
 const getAllPosts=async(req,res)=>{
     const {sort,update_date_start,update_date_end}=req.query 
-    const query={updatedAt:{$lte:new Date(update_date_end||new Date()),$gte:new Date(update_date_start||0)}}
-    console.log(query)     
+    const query={updatedAt:{$lte:new Date(update_date_end||new Date()),$gte:new Date(update_date_start||0)}}   
     const posts=await Post.find(query).sort(sort||"_id").lean()
 if(!posts)
     return res.status(400).send("no posts")
