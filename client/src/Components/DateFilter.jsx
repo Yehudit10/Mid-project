@@ -1,20 +1,15 @@
-//import dayjs from 'dayjs';
-import { MultiInputDateRangeField } from '@mui/x-date-pickers-pro';
+
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-
-import { Box, FormControl, FormLabel, Typography } from '@mui/material';
+import {  FormControl, FormLabel} from '@mui/material';
 
 
 
 const DateFilter=(props)=>{
-  const shortcutsItems = [ ,
-];
-    return (
+ return (
          <LocalizationProvider  dateAdapter={AdapterDayjs}>
-         
          <DemoContainer   components={['DateRangePicker']}>
         <DemoItem  component="DateRangePicker">
         <FormControl sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>

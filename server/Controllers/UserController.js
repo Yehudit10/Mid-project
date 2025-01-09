@@ -1,8 +1,8 @@
 const User=require("../modules/User")
 const getAllUsers=async(req,res)=>{
-    const {update_date_start,update_date_end}=req.query 
+    const {sort,update_date_start,update_date_end}=req.query 
     const query={updatedAt:{$lte:new Date(update_date_end||new Date()),$gte:new Date(update_date_start||0)}}     
-    const users=await User.find(query).sort({_id:1}).lean()
+    const users=await User.find(query).sort(sort||"_id").lean()
 if(!users)
     return res.status(400).send("no users")
 res.json(users)
@@ -17,13 +17,12 @@ const getUserByID=async(req,res)=>{
     const createUser=async(req,res)=>{
         
      const {name,userName,email,address,phone}=req.body
-     const existUser=await User.findOne({userName:userName})
-     if(existUser)
+     const existingUser=await User.findOne({userName:userName})
+     if(existingUser)
        return res.status(400).send("user name already exists")
      const user=await User.create({name,userName,email,address,phone})
      if(!user)
         return res.status(400).send("create failed")
-        
        getAllUsers(req,res)
     }
     const updateUser=async(req,res)=>{
@@ -32,7 +31,6 @@ const getUserByID=async(req,res)=>{
         if(!_id)
             return res.status(400).send("id is required")
         const user=await User.findById(_id).exec()
-        
         if(!user)
            return res.status(400).send("no user")
         user.name=name

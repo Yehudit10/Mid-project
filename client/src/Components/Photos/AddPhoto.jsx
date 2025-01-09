@@ -6,10 +6,8 @@ import PhotoWindow from './PhotoWindow';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 
-
-
 const AddPhoto = (props) => {
-
+  const [open, setOpen] = useState(false)
   const CreatePhoto =useCallback(async function Create_Photo(newPhoto,setNewPhoto){
     try {
       const res = await axios.post(props.url, newPhoto)
@@ -23,7 +21,6 @@ const AddPhoto = (props) => {
       console.error(err)
     }
   },[])
-  const [open, setOpen] = useState(false)
   return (
     <>
     <PhotoWindow open={open} setOpen={setOpen} Photo={{}} action={CreatePhoto}/>

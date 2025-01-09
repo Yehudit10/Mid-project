@@ -6,11 +6,9 @@ import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import DeleteDialog from '../DeleteDialog';
 import PostWindow from './PostWindow';
 
-
-
-
 const Post=(props)=>{
-  
+  const [open,setOpen]=useState(false)
+const [openDelete,setOpenDelete]=useState(false)
       const UpdatePost=useCallback(async function Update_Post(newPost){
         try{
     const res=await axios.put(props.url,newPost)
@@ -33,8 +31,7 @@ const Post=(props)=>{
             console.error(err)
         }
     },[props.Post._id,props.url])
-const [open,setOpen]=useState(false)
-const [openDelete,setOpenDelete]=useState(false)
+
     return (<>
   <DeleteDialog openDelete={openDelete} setOpenDelete={setOpenDelete} Delete={DeletePost}/>
   <PostWindow open={open} setOpen={setOpen} Post={props.Post} action={UpdatePost}/>

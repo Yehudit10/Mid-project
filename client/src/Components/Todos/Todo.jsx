@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, Chip, IconButton, Typography } from "@mui/material";
 import { blue, red } from "@mui/material/colors";
 import { Edit as EditIcon, Delete as DeleteIcon, Done } from '@mui/icons-material';
@@ -12,6 +12,7 @@ const Todo = (props) => {
   const [open, setOpen] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [completed, setCompleted] = useState(props.Todo.completed)
+  useEffect(()=>{setCompleted(props.Todo.completed)},[props.Todo])
   const UpdateComplete = async (todo) => {
     try {
       const res = await axios.put(props.url, { ...todo, completed: !todo.completed })

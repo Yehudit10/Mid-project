@@ -6,6 +6,7 @@ import axios from "axios";
 import PostWindow from './PostWindow';
 
 const AddPost = (props) => {
+  const [open, setOpen] = useState(false)
   const CreatePost = useCallback(async function Create_Post (newPost,setNewPost){
     try {
       const res = await axios.post(props.url, newPost)
@@ -19,7 +20,6 @@ const AddPost = (props) => {
       console.error(err)
     }
   },[])
-  const [open, setOpen] = useState(false)
   return (
     <>
     <PostWindow open={open} setOpen={setOpen} Post={{}} action={CreatePost}/>

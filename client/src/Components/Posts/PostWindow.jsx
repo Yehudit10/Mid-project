@@ -5,13 +5,9 @@ import Textarea from '@mui/joy/Textarea';
 
 
 const PostWindow=(props)=>{
-  useEffect(()=>{
-    setNewPost(props.Post)
-  },[props.Post])// update
-  
-    const [isTitle,setIsTitle]=useState(true)
-    const[newPost,setNewPost]=useState({...props.Post})
-   
+  const [isTitle,setIsTitle]=useState(true)
+  const[newPost,setNewPost]=useState({...props.Post})
+  useEffect(()=>{ setNewPost(props.Post)},[props.Post])
     const save=()=>{
         if(!newPost.title)
         {setIsTitle(false)

@@ -5,6 +5,8 @@ import axios from "axios";
 import UserWindow from "./UserWindow";
 
 const AddUser=(props)=>{
+  const [open,setOpen]=useState(false)
+
     const CreateUser=useCallback( async function Create_User(newUser,setNewUser){
     try{
        const res=await axios.post(props.url,newUser)
@@ -18,7 +20,6 @@ const AddUser=(props)=>{
     }
 },[props.url])
    
-    const [open,setOpen]=useState(false)
     
     return (
         <>

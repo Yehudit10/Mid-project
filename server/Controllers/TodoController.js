@@ -1,18 +1,12 @@
 const Todo=require("../modules/ToDo")
 const getAllTodoes=async(req,res)=>{
-const {completeState,update_date_start,update_date_end}=req.query 
-//console.log(update_date_start)  
+const {sort,update_date_start,update_date_end}=req.query 
 const query={updatedAt:{$lte:new Date(update_date_end||new Date()),$gte:new Date(update_date_start||0)}}     
-if(completeState)  
-query.completed=completeState
-const todos=await Todo.find(query).sort({_id:1}).lean()
-//console.log(todos)
+const todos=await Todo.find(query).sort(sort||"_id").lean()
 if(!todos)
     return res.status(400).send("no todoes") 
 res.json(todos)
 }
-//const todos=await Todo.find({...(completeState&&{completed:false}),updatedAt:{$lte:new Date(update_date_end)||new Date(),$gte:new Date(update_date_start||0)}}).sort({_id:1}).lean()
-//const todos=await Todo.find({completed:{$in:completeState?[completeState]:[true,false]},updatedAt:{$lte:new Date(update_date_end)||new Date(),$gte:new Date(update_date_start||0)}}).sort({_id:1}).lean()
 
 const getTodoByID=async(req,res)=>{
     const {id}=req.params
@@ -28,10 +22,6 @@ const getTodoByID=async(req,res)=>{
      const todo=await Todo.create({title,tags,completed})
      if(!todo)
         return res.status(400).send("create failed")
-        // const todos=await Todo.find().sort({_id:1}).lean()
-        // if(!todos)
-        //     return res.status(400).send("no todoes")
-        // res.json(todos)
         getAllTodoes(req,res)
     }
     const updateTodo=async(req,res)=>{

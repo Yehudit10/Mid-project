@@ -6,9 +6,6 @@ const Search=(props)=>{
 return(
     <AppBar position="fixed" component="nav" >
         <Toolbar >
-   
-      
-             
     <Typography>
             <Paper
                 component="form"
